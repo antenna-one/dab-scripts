@@ -1,12 +1,12 @@
 {
     "global": {
         "daemon": false,
-        "max_encoder_instance": 3,
-        "logs_directory": "/home/pi/ODR-mmbTools/ODR-EncoderManager/logs/",
+        "max_encoder_instance": 15,
+        "logs_directory": "/home/odr/ODR-mmbTools/ODR-EncoderManager/logs/",
         "supervisor_xmlrpc": "http://odr:odr@127.0.0.1:8001/RPC2",
-        "static_directory": "/home/pi/ODR-mmbTools/ODR-EncoderManager/static/",
+        "static_directory": "/home/odr/ODR-mmbTools/ODR-EncoderManager/static/",
         "host": "0.0.0.0",
-        "supervisor_file": "/home/pi/config/supervisor/ODR-encoders.conf",
+        "supervisor_file": "/home/odr/config/supervisor/ODR-encoders.conf",
         "port": 8003
     },
     "auth": {
@@ -19,7 +19,7 @@
     },
     "odr": [
         {
-            "uniq_id": "defee58a-f768-4ca9-a0f7-88f08b2e8748",
+            "uniq_id": "Service-01",
             "autostart": "false",
             "path": {
                 "encoder_path": "/usr/local/bin/odr-audioenc",
@@ -33,6 +33,7 @@
                 "stream_url": "http://radiomonaco.ice.infomaniak.ch/radiomonaco-128.mp3",
                 "stream_writeicytext": "true",
                 "stream_lib": "vlc",
+                "stream_gain": "",
                 "alsa_device": "plughw:1,0",
                 "driftcomp": "true",
                 "silence_detect": "true",
@@ -42,14 +43,14 @@
                 "avt_pad_port": "9405",
                 "avt_jitter_size": "80",
                 "avt_timeout": "4000",
-                "aes67_sdp_file": "/var/tmp/defee58a-f768-4ca9-a0f7-88f08b2e8748.sdp",
+                "aes67_sdp_file": "/var/tmp/Service-01.sdp",
                 "aes67_sdp": ""
             },
             "output": {
                 "type": "dabp",
                 "output": [
                     {
-                        "name": "",
+                        "name": "EDI-9001",
                         "type": "editcp",
                         "host": "127.0.0.1",
                         "port": "9001",
@@ -71,8 +72,8 @@
             "padenc": {
                 "enable": "true",
                 "pad": "34",
-                "dls_file": "/home/pi/config/mot/P01/INFO.dls",
-                "slide_directory": "/home/pi/config/mot/P01/slide/",
+                "dls_file": "/home/odr/config/mot/P01/INFO.dls",
+                "slide_directory": "/home/odr/config/mot/P01/slide/",
                 "slide_sleeping": "0",
                 "slide_once": "false",
                 "raw_dls": "false",
@@ -86,13 +87,13 @@
             "name": "P01",
             "description": "Radio Monaco",
             "supervisor_additional_options": {
-                "user": "pi",
-                "group": "pi",
+                "user": "odr",
+                "group": "odr",
                 "autorestart": "false"
             }
         },
         {
-            "uniq_id": "7158c498-1ef1-4580-b385-23a3c06ba985",
+            "uniq_id": "Service-02",
             "autostart": "false",
             "path": {
                 "encoder_path": "/usr/local/bin/odr-audioenc",
@@ -115,14 +116,15 @@
                 "avt_pad_port": "9405",
                 "avt_jitter_size": "80",
                 "avt_timeout": "4000",
-                "aes67_sdp_file": "/var/tmp/7158c498-1ef1-4580-b385-23a3c06ba985.sdp",
-                "aes67_sdp": ""
+                "aes67_sdp_file": "/var/tmp/Service-02.sdp",
+                "aes67_sdp": "",
+                "stream_gain": ""
             },
             "output": {
                 "type": "dabp",
                 "output": [
                     {
-                        "name": "",
+                        "name": "EDI-9002",
                         "type": "editcp",
                         "host": "127.0.0.1",
                         "port": "9002",
@@ -144,22 +146,539 @@
             "padenc": {
                 "enable": "true",
                 "pad": "34",
-                "dls_file": "/home/pi/config/mot/P02/INFO.dls",
-                "slide_directory": "/home/pi/config/mot/P02/slide",
+                "dls_file": "/home/odr/config/mot/P02/INFO.dls",
+                "slide_directory": "/home/odr/config/mot/P02/slide",
                 "slide_sleeping": "0",
                 "slide_once": "false",
                 "raw_dls": "false",
                 "raw_slides": "false",
                 "uniform_label": "12",
-                "uniform_label_ins": "1200"
+                "uniform_label_ins": "1200",
+                "slide_carousel_interval": "",
+                "slide_live_interval": "",
+                "slide_live_lifetime": ""
             },
             "name": "P02",
             "description": "Capital FM London",
             "supervisor_additional_options": {
-                "user": "pi",
-                "group": "pi",
+                "user": "odr",
+                "group": "odr",
+                "autorestart": "false"
+            }
+        },
+        {
+            "uniq_id": "Service-03",
+            "autostart": "false",
+            "path": {
+                "encoder_path": "/usr/local/bin/odr-audioenc",
+                "padenc_path": "/usr/local/bin/odr-padenc",
+                "sourcecompanion_path": "/usr/local/bin/odr-sourcecompanion",
+                "zmq_key_tmp_file": "/var/tmp/zmq-P03.key"
+            },
+            "source": {
+                "type": "stream",
+                "stats_socket": "/var/tmp/P03.stats",
+                "stream_url": "https://evanov.leanstream.co/evanov/CIDCFM.stream",
+                "stream_writeicytext": "true",
+                "stream_lib": "vlc",
+                "alsa_device": "plughw:1,0",
+                "driftcomp": "true",
+                "silence_detect": "true",
+                "silence_duration": "60",
+                "avt_input_uri": "udp://:32010",
+                "avt_control_uri": "udp://192.168.128.111:9325",
+                "avt_pad_port": "9405",
+                "avt_jitter_size": "80",
+                "avt_timeout": "4000",
+                "aes67_sdp_file": "/var/tmp/Service-03.sdp",
+                "aes67_sdp": "",
+                "stream_gain": ""
+            },
+            "output": {
+                "type": "dabp",
+                "output": [
+                    {
+                        "name": "EDI-9003",
+                        "type": "editcp",
+                        "host": "127.0.0.1",
+                        "port": "9003",
+                        "enable": "true"
+                    }
+                ],
+                "zmq_key": "",
+                "bitrate": "128",
+                "samplerate": "48000",
+                "channels": "2",
+                "dabp_sbr": "true",
+                "dabp_ps": "false",
+                "dabp_afterburner": "true",
+                "dab_dabmode": "j",
+                "dab_dabpsy": "1",
+                "edi_identifier": "",
+                "edi_timestamps_delay": ""
+            },
+            "padenc": {
+                "enable": "true",
+                "pad": "34",
+                "dls_file": "/home/odr/config/mot/P03/INFO.dls",
+                "slide_directory": "/home/odr/config/mot/P03/slide/",
+                "slide_sleeping": "0",
+                "slide_once": "false",
+                "raw_dls": "false",
+                "raw_slides": "false",
+                "uniform_label": "12",
+                "uniform_label_ins": "1200",
+                "slide_carousel_interval": "",
+                "slide_live_interval": "",
+                "slide_live_lifetime": ""
+            },
+            "name": "P03",
+            "description": "Z1035"
+        },
+        {
+            "uniq_id": "Service-04",
+            "autostart": "false",
+            "path": {
+                "encoder_path": "/usr/local/bin/odr-audioenc",
+                "padenc_path": "/usr/local/bin/odr-padenc",
+                "sourcecompanion_path": "/usr/local/bin/odr-sourcecompanion",
+                "zmq_key_tmp_file": "/var/tmp/zmq-P04.key"
+            },
+            "source": {
+                "type": "stream",
+                "stats_socket": "/var/tmp/P04.stats",
+                "stream_url": "https://ice8.securenetsystems.net/WOOF",
+                "stream_writeicytext": "true",
+                "stream_lib": "vlc",
+                "alsa_device": "plughw:1,0",
+                "driftcomp": "true",
+                "silence_detect": "true",
+                "silence_duration": "60",
+                "avt_input_uri": "udp://:32010",
+                "avt_control_uri": "udp://192.168.128.111:9325",
+                "avt_pad_port": "9405",
+                "avt_jitter_size": "80",
+                "avt_timeout": "4000",
+                "aes67_sdp_file": "/var/tmp/Service-04.sdp",
+                "aes67_sdp": "",
+                "stream_gain": ""
+            },
+            "output": {
+                "type": "dabp",
+                "output": [
+                    {
+                        "name": "EDI-9004",
+                        "type": "editcp",
+                        "host": "127.0.0.1",
+                        "port": "9004",
+                        "enable": "true"
+                    }
+                ],
+                "zmq_key": "",
+                "bitrate": "128",
+                "samplerate": "48000",
+                "channels": "2",
+                "dabp_sbr": "true",
+                "dabp_ps": "false",
+                "dabp_afterburner": "true",
+                "dab_dabmode": "j",
+                "dab_dabpsy": "1",
+                "edi_identifier": "",
+                "edi_timestamps_delay": ""
+            },
+            "padenc": {
+                "enable": "true",
+                "pad": "34",
+                "dls_file": "/home/odr/config/mot/P04/INFO.dls",
+                "slide_directory": "/home/odr/config/mot/P04/slide/",
+                "slide_sleeping": "0",
+                "slide_once": "false",
+                "raw_dls": "false",
+                "raw_slides": "false",
+                "uniform_label": "12",
+                "uniform_label_ins": "1200",
+                "slide_carousel_interval": "",
+                "slide_live_interval": "",
+                "slide_live_lifetime": ""
+            },
+            "name": "P04",
+            "description": "WOOF FM",
+            "supervisor_additional_options": {
+                "user": "odr",
+                "group": "odr",
+                "autorestart": "false"
+            }
+        },
+        {
+            "uniq_id": "Service-05",
+            "autostart": "false",
+            "path": {
+                "encoder_path": "/usr/local/bin/odr-audioenc",
+                "padenc_path": "/usr/local/bin/odr-padenc",
+                "sourcecompanion_path": "/usr/local/bin/odr-sourcecompanion",
+                "zmq_key_tmp_file": "/var/tmp/zmq-P05.key"
+            },
+            "source": {
+                "type": "stream",
+                "stats_socket": "/var/tmp/P05.stats",
+                "stream_url": "https://wz2liw.scahw.com.au/live/2day_128.stream",
+                "stream_writeicytext": "true",
+                "stream_lib": "vlc",
+                "alsa_device": "plughw:1,0",
+                "driftcomp": "true",
+                "silence_detect": "true",
+                "silence_duration": "60",
+                "avt_input_uri": "udp://:32010",
+                "avt_control_uri": "udp://192.168.128.111:9325",
+                "avt_pad_port": "9405",
+                "avt_jitter_size": "80",
+                "avt_timeout": "4000",
+                "aes67_sdp_file": "/var/tmp/Service-05.sdp",
+                "aes67_sdp": "",
+                "stream_gain": ""
+            },
+            "output": {
+                "type": "dabp",
+                "output": [
+                    {
+                        "name": "EDI-9005",
+                        "type": "editcp",
+                        "host": "127.0.0.1",
+                        "port": "9005",
+                        "enable": "true"
+                    }
+                ],
+                "zmq_key": "",
+                "bitrate": "128",
+                "samplerate": "48000",
+                "channels": "2",
+                "dabp_sbr": "true",
+                "dabp_ps": "false",
+                "dabp_afterburner": "true",
+                "dab_dabmode": "j",
+                "dab_dabpsy": "1",
+                "edi_identifier": "",
+                "edi_timestamps_delay": ""
+            },
+            "padenc": {
+                "enable": "true",
+                "pad": "34",
+                "dls_file": "/home/odr/config/mot/P05/INFO.dls",
+                "slide_directory": "/home/odr/config/mot/P05/slide/",
+                "slide_sleeping": "0",
+                "slide_once": "false",
+                "raw_dls": "false",
+                "raw_slides": "false",
+                "uniform_label": "12",
+                "uniform_label_ins": "1200",
+                "slide_carousel_interval": "",
+                "slide_live_interval": "",
+                "slide_live_lifetime": ""
+            },
+            "name": "P05",
+            "description": "2DayFM",
+            "supervisor_additional_options": {
+                "user": "odr",
+                "group": "odr",
+                "autorestart": "false"
+            }
+        },
+        {
+            "uniq_id": "Service-06",
+            "autostart": "false",
+            "path": {
+                "encoder_path": "/usr/local/bin/odr-audioenc",
+                "padenc_path": "/usr/local/bin/odr-padenc",
+                "sourcecompanion_path": "/usr/local/bin/odr-sourcecompanion",
+                "zmq_key_tmp_file": "/var/tmp/zmq-P06.key"
+            },
+            "source": {
+                "type": "stream",
+                "stats_socket": "/var/tmp/P06.stats",
+                "stream_url": "http://uk1.antenna.one:8296/stream",
+                "stream_writeicytext": "true",
+                "stream_lib": "vlc",
+                "alsa_device": "plughw:1,0",
+                "driftcomp": "true",
+                "silence_detect": "true",
+                "silence_duration": "60",
+                "avt_input_uri": "udp://:32010",
+                "avt_control_uri": "udp://192.168.128.111:9325",
+                "avt_pad_port": "9405",
+                "avt_jitter_size": "80",
+                "avt_timeout": "4000",
+                "aes67_sdp_file": "/var/tmp/Service-06.sdp",
+                "aes67_sdp": "",
+                "stream_gain": ""
+            },
+            "output": {
+                "type": "dabp",
+                "output": [
+                    {
+                        "name": "EDI-9006",
+                        "type": "editcp",
+                        "host": "127.0.0.1",
+                        "port": "9006",
+                        "enable": "true"
+                    }
+                ],
+                "zmq_key": "",
+                "bitrate": "128",
+                "samplerate": "48000",
+                "channels": "2",
+                "dabp_sbr": "true",
+                "dabp_ps": "false",
+                "dabp_afterburner": "true",
+                "dab_dabmode": "j",
+                "dab_dabpsy": "1",
+                "edi_identifier": "",
+                "edi_timestamps_delay": ""
+            },
+            "padenc": {
+                "enable": "true",
+                "pad": "34",
+                "dls_file": "/home/odr/config/mot/P06/INFO.dls",
+                "slide_directory": "/home/odr/config/mot/P06/slide/",
+                "slide_sleeping": "0",
+                "slide_once": "false",
+                "raw_dls": "false",
+                "raw_slides": "false",
+                "uniform_label": "12",
+                "uniform_label_ins": "1200",
+                "slide_carousel_interval": "",
+                "slide_live_interval": "",
+                "slide_live_lifetime": ""
+            },
+            "name": "P06",
+            "description": "Antenna Radio",
+            "supervisor_additional_options": {
+                "user": "odr",
+                "group": "odr",
+                "autorestart": "false"
+            }
+        },
+        {
+            "uniq_id": "Service-07",
+            "autostart": "false",
+            "path": {
+                "encoder_path": "/usr/local/bin/odr-audioenc",
+                "padenc_path": "/usr/local/bin/odr-padenc",
+                "sourcecompanion_path": "/usr/local/bin/odr-sourcecompanion",
+                "zmq_key_tmp_file": "/var/tmp/zmq-P07.key"
+            },
+            "source": {
+                "type": "stream",
+                "stats_socket": "/var/tmp/P07.stats",
+                "stream_url": "http://scdn.nrjaudio.fm/audio1/fr/30001/mp3_128.mp3",
+                "stream_writeicytext": "true",
+                "stream_lib": "vlc",
+                "alsa_device": "plughw:1,0",
+                "driftcomp": "true",
+                "silence_detect": "true",
+                "silence_duration": "60",
+                "avt_input_uri": "udp://:32010",
+                "avt_control_uri": "udp://192.168.128.111:9325",
+                "avt_pad_port": "9405",
+                "avt_jitter_size": "80",
+                "avt_timeout": "4000",
+                "aes67_sdp_file": "/var/tmp/Service-07.sdp",
+                "aes67_sdp": "",
+                "stream_gain": ""
+            },
+            "output": {
+                "type": "dabp",
+                "output": [
+                    {
+                        "name": "EDI-9007",
+                        "type": "editcp",
+                        "host": "127.0.0.1",
+                        "port": "9007",
+                        "enable": "true"
+                    }
+                ],
+                "zmq_key": "",
+                "bitrate": "128",
+                "samplerate": "48000",
+                "channels": "2",
+                "dabp_sbr": "true",
+                "dabp_ps": "false",
+                "dabp_afterburner": "true",
+                "dab_dabmode": "j",
+                "dab_dabpsy": "1",
+                "edi_identifier": "",
+                "edi_timestamps_delay": ""
+            },
+            "padenc": {
+                "enable": "true",
+                "pad": "34",
+                "dls_file": "/home/odr/config/mot/P07/INFO.dls",
+                "slide_directory": "/home/odr/config/mot/P07/slide/",
+                "slide_sleeping": "0",
+                "slide_once": "false",
+                "raw_dls": "false",
+                "raw_slides": "false",
+                "uniform_label": "12",
+                "uniform_label_ins": "1200",
+                "slide_carousel_interval": "",
+                "slide_live_interval": "",
+                "slide_live_lifetime": ""
+            },
+            "name": "P07",
+            "description": "NRJ",
+            "supervisor_additional_options": {
+                "user": "odr",
+                "group": "odr",
+                "autorestart": "false"
+            }
+        },
+        {
+            "uniq_id": "Service-08",
+            "autostart": "false",
+            "path": {
+                "encoder_path": "/usr/local/bin/odr-audioenc",
+                "padenc_path": "/usr/local/bin/odr-padenc",
+                "sourcecompanion_path": "/usr/local/bin/odr-sourcecompanion",
+                "zmq_key_tmp_file": "/var/tmp/zmq-P08.key"
+            },
+            "source": {
+                "type": "stream",
+                "stats_socket": "/var/tmp/P08.stats",
+                "stream_url": "http://airspectrum.cdnstream1.com:8018/1606_192",
+                "stream_writeicytext": "true",
+                "stream_lib": "vlc",
+                "alsa_device": "plughw:1,0",
+                "driftcomp": "true",
+                "silence_detect": "true",
+                "silence_duration": "60",
+                "avt_input_uri": "udp://:32010",
+                "avt_control_uri": "udp://192.168.128.111:9325",
+                "avt_pad_port": "9405",
+                "avt_jitter_size": "80",
+                "avt_timeout": "4000",
+                "aes67_sdp_file": "/var/tmp/Service-08.sdp",
+                "aes67_sdp": "",
+                "stream_gain": ""
+            },
+            "output": {
+                "type": "dabp",
+                "output": [
+                    {
+                        "name": "EDI-9008",
+                        "type": "editcp",
+                        "host": "127.0.0.1",
+                        "port": "9008",
+                        "enable": "true"
+                    }
+                ],
+                "zmq_key": "",
+                "bitrate": "128",
+                "samplerate": "48000",
+                "channels": "2",
+                "dabp_sbr": "true",
+                "dabp_ps": "false",
+                "dabp_afterburner": "true",
+                "dab_dabmode": "j",
+                "dab_dabpsy": "1",
+                "edi_identifier": "",
+                "edi_timestamps_delay": ""
+            },
+            "padenc": {
+                "enable": "true",
+                "pad": "34",
+                "dls_file": "/home/odr/config/mot/P08/INFO.dls",
+                "slide_directory": "/home/odr/config/mot/P08/slide/",
+                "slide_sleeping": "0",
+                "slide_once": "false",
+                "raw_dls": "false",
+                "raw_slides": "false",
+                "uniform_label": "12",
+                "uniform_label_ins": "1200",
+                "slide_carousel_interval": "",
+                "slide_live_interval": "",
+                "slide_live_lifetime": ""
+            },
+            "name": "P08",
+            "description": "Florida's Magic 80s",
+            "supervisor_additional_options": {
+                "user": "odr",
+                "group": "odr",
+                "autorestart": "false"
+            }
+        },
+        {
+            "uniq_id": "Service-09",
+            "autostart": "false",
+            "path": {
+                "encoder_path": "/usr/local/bin/odr-audioenc",
+                "padenc_path": "/usr/local/bin/odr-padenc",
+                "sourcecompanion_path": "/usr/local/bin/odr-sourcecompanion",
+                "zmq_key_tmp_file": "/var/tmp/zmq-P09.key"
+            },
+            "source": {
+                "type": "stream",
+                "stats_socket": "/var/tmp/P09.stats",
+                "stream_url": "http://108.61.37.106:6982",
+                "stream_writeicytext": "true",
+                "stream_lib": "vlc",
+                "stream_gain": "",
+                "alsa_device": "plughw:1,0",
+                "driftcomp": "true",
+                "silence_detect": "true",
+                "silence_duration": "60",
+                "avt_input_uri": "udp://:32010",
+                "avt_control_uri": "udp://192.168.128.111:9325",
+                "avt_pad_port": "9405",
+                "avt_jitter_size": "80",
+                "avt_timeout": "4000",
+                "aes67_sdp_file": "/var/tmp/Service-09.sdp",
+                "aes67_sdp": ""
+            },
+            "output": {
+                "type": "dabp",
+                "output": [
+                    {
+                        "name": "EDI-9009",
+                        "type": "editcp",
+                        "host": "127.0.0.1",
+                        "port": "9009",
+                        "enable": "true"
+                    }
+                ],
+                "zmq_key": "",
+                "bitrate": "128",
+                "samplerate": "48000",
+                "channels": "2",
+                "dabp_sbr": "true",
+                "dabp_ps": "false",
+                "dabp_afterburner": "true",
+                "dab_dabmode": "j",
+                "dab_dabpsy": "1",
+                "edi_identifier": "",
+                "edi_timestamps_delay": ""
+            },
+            "padenc": {
+                "enable": "true",
+                "pad": "34",
+                "dls_file": "/home/odr/config/mot/P09/INFO.dls",
+                "slide_directory": "/home/odr/config/mot/P09/slide/",
+                "slide_sleeping": "0",
+                "slide_once": "false",
+                "raw_dls": "false",
+                "raw_slides": "false",
+                "uniform_label": "12",
+                "uniform_label_ins": "1200",
+                "slide_carousel_interval": "",
+                "slide_live_interval": "",
+                "slide_live_lifetime": ""
+            },
+            "name": "P09",
+            "description": "Classic Hits 109",
+            "supervisor_additional_options": {
+                "user": "odr",
+                "group": "odr",
                 "autorestart": "false"
             }
         }
-    ]
+    ],
+    "plugins": {}
 }
